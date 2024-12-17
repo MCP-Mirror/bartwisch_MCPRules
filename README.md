@@ -1,93 +1,60 @@
-# Rules Server MCP
+# MCPRules - Programming Guidelines Management Server
 
-A Model Context Protocol (MCP) server that provides access to rules and categories.
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+[![MCP](https://img.shields.io/badge/MCP-Enabled-green.svg)](https://github.com/modelcontextprotocol)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A powerful Model Context Protocol (MCP) server that manages and serves programming guidelines and rules. This server integrates with development tools to provide consistent coding standards across projects.
 
 ## Features
 
-- Get all rules or filter by category
-- Get list of all rule categories
+- **Rule Management**
+  - Access rules via MCP tools
+  - Filter rules by categories
+  - Support for both local and GitHub-hosted rules
+  - Structured rule format with categories and key-value pairs
 
-## Rules Storage
+- **Flexible Storage**
+  - Local file system support
+  - GitHub repository integration
+  - Markdown-based rule definitions
 
-Rules are stored in two locations:
-- Global rules: `~/Library/Application Support/Windsurf/User/globalStorage/rooveterinaryinc.roo-cline/settings/global_rules.md`
-- Workspace rules: In your project directory as `workspace_rules.md`
-
-These markdown files contain the rules in a structured format that the server parses and serves through its MCP tools.
+- **Category Organization**
+  - Core Programming Principles
+  - Code Style and Formatting
+  - Language-Specific Guidelines
+  - Project Management Rules
+  - Operating System Specific Rules
 
 ## Installation
 
-1. Clone or download this repository
-2. Install dependencies:
-```bash
-npm install
-```
-3. Build the server:
-```bash
-npm run build
-```
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/yourusername/MCPRules.git
+   cd MCPRules/rules-server
+   ```
 
-### Step-by-Step Installation Example
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-Here's a concrete example for a user named "hugo":
+3. **Build the Server**
+   ```bash
+   npm run build
+   ```
 
-1. Create the MCP directory:
-```bash
-mkdir -p /Users/hugo/Documents/Cline/MCP
-cd /Users/hugo/Documents/Cline/MCP
-```
-
-2. Clone the repository:
-```bash
-git clone https://github.com/bartwisch/MCPRules.git
-cd rules-server
-```
-
-3. Install dependencies:
-```bash
-npm install
-```
-
-4. Build the server:
-```bash
-npm run build
-```
-
-5. Configure the MCP settings. For VSCode, edit:
-```bash
-vim /Users/hugo/Library/Application Support/Windsurf/User/globalStorage/rooveterinaryinc.roo-cline/settings/cline_mcp_settings.json
-```
-
-Add this configuration:
-```json
-{
-  "mcpServers": {
-    "rules": {
-      "command": "node",
-      "args": ["/Users/hugo/Documents/Cline/MCP/rules-server/build/index.js"],
-      "disabled": false,
-      "alwaysAllow": []
-    }
-  }
-}
-```
-
-6. Create or ensure the rules files exist:
-```bash
-touch "/Users/hugo/Library/Application Support/Windsurf/User/globalStorage/rooveterinaryinc.roo-cline/settings/global_rules.md"
-```
+4. **Configure Environment Variables**
+   ```bash
+   export RULES_FILE_PATH=/path/to/your/rules.md
+   # Optional for private GitHub repositories
+   export GITHUB_TOKEN=your_github_token
+   ```
 
 ## Configuration
 
-Add the rules-server to your MCP settings configuration file. The location depends on your environment:
-
-### For Cline VSCode Extension
+### For VSCode Cline Extension
 Location: `~/Library/Application Support/Windsurf/User/globalStorage/rooveterinaryinc.roo-cline/settings/cline_mcp_settings.json`
-
-### For Claude Desktop App
-Location: `~/Library/Application Support/Claude/claude_desktop_config.json`
-
-Add the following configuration:
 
 ```json
 {
@@ -102,59 +69,60 @@ Add the following configuration:
 }
 ```
 
-Replace `/path/to/rules-server` with the actual path to your rules-server installation.
+### For Claude Desktop
+Location: `~/Library/Application Support/Claude/claude_desktop_config.json`
 
 ## Usage
 
-Once configured, the rules-server provides two tools that can be used through the MCP protocol:
+### Available Tools
 
-### 1. Get Rules
+1. **Get Rules**
+   ```typescript
+   // Retrieve all rules or filter by category
+   {
+     "category": "optional-category-name"
+   }
+   ```
 
-Retrieve all rules or filter by category:
+2. **Get Categories**
+   ```typescript
+   // List all available rule categories
+   {}
+   ```
 
-```typescript
-<use_mcp_tool>
-<server_name>rules-server</server_name>
-<tool_name>get_rules</tool_name>
-<arguments>
-{
-  "category": "optional-category-name"
-}
-</arguments>
-</use_mcp_tool>
-```
+### Rule Format
+Rules are stored in markdown files with the following structure:
 
-### 2. Get Categories
-
-Retrieve a list of all available rule categories:
-
-```typescript
-<use_mcp_tool>
-<server_name>rules-server</server_name>
-<tool_name>get_categories</tool_name>
-<arguments>
-{}
-</arguments>
-</use_mcp_tool>
+```markdown
+#Category
+key: value
 ```
 
 ## Development
 
-To modify or extend the rules-server:
+- **Watch Mode**
+  ```bash
+  npm run watch
+  ```
 
-1. Source code is in the `src` directory
-2. Make your changes
-3. Rebuild using `npm run build`
-4. Restart any applications using the MCP server to pick up the changes
+- **Debugging**
+  ```bash
+  npm run inspector
+  ```
 
-## Error Handling
+## Contributing
 
-The server will return appropriate error messages if:
-- Invalid category is provided
-- Required parameters are missing
-- Server encounters internal errors
-- Rules files cannot be found or accessed
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## License
 
-MIT License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Credits to the original rules from [Reddit discussion](https://www.reddit.com/r/Codeium/comments/1heztku/my_experience_with_windsurf_lets_make_it_better/)
+- Thanks to the Model Context Protocol community
