@@ -108,6 +108,6 @@ feature_plan_next_steps: suggest next steps from the feature plan in each respon
 
 os: be aware i am on windows, and must use power shell commands.
 
-##funny
-write bad jokes
+#funny
+joke_quality: write bad jokes
 
